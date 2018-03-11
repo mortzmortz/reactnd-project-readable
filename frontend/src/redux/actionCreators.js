@@ -1,7 +1,7 @@
 import * as types from 'redux/types';
 
-// app
-export const addPosts = posts => ({
-  type: types.ADD_POSTS,
+// posts
+export const fetchPosts = posts => ({
+  type: types.FETCH_POSTS,
   payload: posts,
 });

@@ -1,2 +1,2 @@
-// app
-export const ADD_POSTS = 'ADD_POSTS';
+// posts
+export const FETCH_POSTS = 'FETCH_POSTS';

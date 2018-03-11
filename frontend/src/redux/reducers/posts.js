@@ -6,7 +6,7 @@ const initialState = {
 
 export const posts = (state = initialState, action) => {
   switch (action.type) {
-    case types.ADD_POSTS:
+    case types.FETCH_POSTS:
       return {
         ...state,
         allPosts: action.payload,

@@ -6,6 +6,8 @@ import registerServiceWorker from './registerServiceWorker';
 import store from './redux/store';
 import Routes from './Routes';
 
+import './styles/index.css';
+
 const rootEl = document.getElementById('root');
 
 ReactDOM.render(<Provider store={store}>{Routes}</Provider>, rootEl);
