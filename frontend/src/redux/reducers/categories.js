@@ -1,38 +1,43 @@
 import * as types from 'redux/types';
 
 const initialState = {
-  allPosts: [],
+  allCategories: [],
   isFetching: false,
   error: null,
+  current: null,
 };
 
-const posts = (state = initialState, action) => {
+const categories = (state = initialState, action) => {
   switch (action.type) {
-    case types.FETCH_POSTS:
+    case types.FETCH_CATEGORIES:
       return {
         ...state,
-        allPosts: [],
+        allCategories: [],
         error: null,
         isFetching: true,
       };
-    case types.FETCH_POSTS_SUCCESS:
+    case types.FETCH_CATEGORIES_SUCCESS:
       return {
         ...state,
-        allPosts: action.payload,
+        allCategories: action.payload,
         error: null,
         isFetching: false,
       };
-
-    case types.FETCH_POSTS_FAILURE:
+    case types.FETCH_CATEGORIES_FAILURE:
       return {
         ...state,
-        allPosts: [],
+        allCategories: [],
         error: action.payload,
         isFetching: false,
+      };
+    case types.SET_CURRENT_CATEGORY:
+      return {
+        ...state,
+        current: action.payload,
       };
     default:
       return state;
   }
 };
 
-export default posts;
+export default categories;

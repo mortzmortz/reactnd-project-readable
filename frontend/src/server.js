@@ -2,16 +2,17 @@ import axios from 'axios';
 
 const port = 3001;
 const baseURL = `http://localhost:${port}`;
+const headers = {
+  Authorization: Math.random()
+    .toString(36)
+    .substr(-8),
+};
 
 export const getData = (endpoint = '/') =>
   axios.create({
     method: 'GET',
     baseURL: `${baseURL}${endpoint}`,
-    headers: {
-      Authorization: Math.random()
-        .toString(36)
-        .substr(-8),
-    },
+    headers,
   })();
 
 export const postData = (endpoint = '/', data = {}) =>
@@ -19,11 +20,7 @@ export const postData = (endpoint = '/', data = {}) =>
     method: 'POST',
     baseURL: `${baseURL}${endpoint}`,
     data,
-    headers: {
-      Authorization: Math.random()
-        .toString(36)
-        .substr(-8),
-    },
+    headers,
   })();
 
 export const putData = (endpoint = '/', data = {}) =>
@@ -31,11 +28,7 @@ export const putData = (endpoint = '/', data = {}) =>
     method: 'PUT',
     baseURL: `${baseURL}${endpoint}`,
     data,
-    headers: {
-      Authorization: Math.random()
-        .toString(36)
-        .substr(-8),
-    },
+    headers,
   })();
 
 export const deleteData = (endpoint = '/', data = {}) =>
@@ -43,9 +36,5 @@ export const deleteData = (endpoint = '/', data = {}) =>
     method: 'DELETE',
     baseURL: `${baseURL}${endpoint}`,
     data,
-    headers: {
-      Authorization: Math.random()
-        .toString(36)
-        .substr(-8),
-    },
+    headers,
   })();

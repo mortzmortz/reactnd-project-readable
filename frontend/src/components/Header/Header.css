@@ -1,4 +1,18 @@
 .global-header {
-  height: 160px;
   background-color: lavender;
+}
+
+.global-header .inner {
+  max-width: 600px;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.global-header .header-title {
+  font-weight: 300;
+  font-size: 18px;
 }
