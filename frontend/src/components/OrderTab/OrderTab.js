@@ -1,28 +1,42 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { changeTab } from 'redux/actions/sorting';
+import { changeSorting } from 'redux/actions/sorting';
 import { TabBar, Tab } from 'rmwc/Tabs';
 
-class OrderTab extends Component {
+class OrderTab extends React.PureComponent {
+  static propTypes = {
+    sorting: PropTypes.object.isRequired,
+    sortTabsList: PropTypes.array.isRequired,
+  };
+
   state = {
     activeTabIndex: 0,
   };
 
-  handleTabClick = (event, tab, index) => {
-    if (this.state.activeTabIndex !== index) {
-      this.setState({ activeTabIndex: index });
-      this.props.changeTab(tab);
+  componentDidMount() {
+    const { sortBy, byName } = this.props.sorting;
+    const prevTab = byName[sortBy];
+    this.setState({ activeTabIndex: prevTab.index });
+  }
+
+  handleTabClick = (event, tab) => {
+    if (this.state.activeTabIndex !== tab.index) {
+      this.setState({ activeTabIndex: tab.index });
+      this.props.changeSorting(tab.name);
     }
   };
 
   render() {
+    const { sortTabsList } = this.props;
+    const { activeTabIndex } = this.state;
     return (
-      <TabBar activeTabIndex={this.state.activeTabIndex} style={styles.tabBar}>
-        {this.props.sorting.allTabs.map((tab, index) => (
+      <TabBar activeTabIndex={activeTabIndex} style={styles.tabBar}>
+        {sortTabsList.map((tab, index) => (
           <Tab
             key={tab.path}
             style={styles.tab}
-            onClick={event => this.handleTabClick(event, tab, index)}
+            onClick={event => this.handleTabClick(event, tab)}
           >
             {tab.name}
           </Tab>
@@ -45,8 +59,9 @@ styles.tab = {
 
 const mapStateToProps = state => ({
   sorting: state.sorting,
+  sortTabsList: Object.values(state.sorting.byName),
 });
 
 export default connect(mapStateToProps, {
-  changeTab,
+  changeSorting,
 })(OrderTab);

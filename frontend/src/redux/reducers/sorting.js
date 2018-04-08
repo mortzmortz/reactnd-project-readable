@@ -1,28 +1,27 @@
-import * as types from 'redux/types';
+import { CHANGE_SORTING } from 'redux/actions/sorting';
 
 const initialState = {
-  allTabs: [
-    {
+  byName: {
+    new: {
+      index: 0,
       name: 'new',
       path: 'new',
     },
-    {
+    popular: {
+      index: 1,
       name: 'popular',
       path: 'popular',
     },
-  ],
-  currentTab: {
-    name: 'new',
-    path: 'new',
   },
+  sortBy: 'new',
 };
 
 const sorting = (state = initialState, action) => {
   switch (action.type) {
-    case types.CHANGE_TAB:
+    case CHANGE_SORTING:
       return {
         ...state,
-        currentTab: action.payload,
+        sortBy: action.payload,
       };
     default:
       return state;

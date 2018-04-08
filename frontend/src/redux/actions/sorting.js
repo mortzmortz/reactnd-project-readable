@@ -1,6 +1,6 @@
-import * as types from 'redux/types';
+export const CHANGE_SORTING = '[sorting] Change';
 
-export const changeTab = tab => ({
-  type: types.CHANGE_TAB,
-  payload: tab,
+export const changeSorting = sortBy => ({
+  type: CHANGE_SORTING,
+  payload: sortBy,
 });

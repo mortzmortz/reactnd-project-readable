@@ -18,7 +18,7 @@ import { Chip, ChipText } from 'rmwc/Chip';
 import { Icon } from 'rmwc/Icon';
 import { distanceInWords } from 'date-fns';
 
-class PostCard extends React.Component {
+class PostCardDetail extends React.Component {
   static propTypes = {
     post: PropTypes.object.isRequired,
   };
@@ -138,5 +138,5 @@ styles.thumbIcon = {
 export default withRouter(
   connect(null, {
     votePost,
-  })(PostCard)
+  })(PostCardDetail)
 );

@@ -13,6 +13,13 @@
 }
 
 .loading-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+}
+
+.loading-indicator__spinner {
   animation: pulsate 1.5s ease-out;
   animation-iteration-count: infinite;
   opacity: 0.0;

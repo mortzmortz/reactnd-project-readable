@@ -11,7 +11,7 @@ const CategoriesSwitch = ({ categories }) => {
       {categories.isFetching ? (
         <p>loading</p>
       ) : (
-        categories.allCategories.map(category => (
+        Object.values(categories.byName).map(category => (
           <Link
             key={category.path}
             to={{
@@ -19,7 +19,7 @@ const CategoriesSwitch = ({ categories }) => {
               state: { category: category.name },
             }}
           >
-            <Button unelevated={category.name === categories.current}>
+            <Button unelevated={category.name === categories.active}>
               {category.name}
             </Button>
           </Link>

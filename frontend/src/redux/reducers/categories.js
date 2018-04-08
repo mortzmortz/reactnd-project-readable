@@ -1,39 +1,45 @@
-import * as types from 'redux/types';
+import { normalize } from 'utils/utils';
+import {
+  FETCH_CATEGORIES,
+  FETCH_CATEGORIES_SUCCESS,
+  FETCH_CATEGORIES_FAILURE,
+  SET_ACTIVE_CATEGORY,
+} from 'redux/actions/categories';
 
 const initialState = {
-  allCategories: [],
+  byName: {},
   isFetching: false,
   error: null,
-  current: null,
+  active: null,
 };
 
 const categories = (state = initialState, action) => {
   switch (action.type) {
-    case types.FETCH_CATEGORIES:
+    case FETCH_CATEGORIES:
       return {
         ...state,
-        allCategories: [],
+        byName: {},
         error: null,
         isFetching: true,
       };
-    case types.FETCH_CATEGORIES_SUCCESS:
+    case FETCH_CATEGORIES_SUCCESS:
       return {
         ...state,
-        allCategories: action.payload,
+        byName: normalize(action.payload, state.byName, 'name'),
         error: null,
         isFetching: false,
       };
-    case types.FETCH_CATEGORIES_FAILURE:
+    case FETCH_CATEGORIES_FAILURE:
       return {
         ...state,
-        allCategories: [],
+        byName: {},
         error: action.payload,
         isFetching: false,
       };
-    case types.SET_CURRENT_CATEGORY:
+    case SET_ACTIVE_CATEGORY:
       return {
         ...state,
-        current: action.payload,
+        active: action.payload,
       };
     default:
       return state;
