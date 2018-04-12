@@ -5894,7 +5894,11 @@ prettier-eslint@^8.8.1:
     typescript "^2.5.1"
     typescript-eslint-parser "^11.0.0"
 
-prettier@^1.11.1, prettier@^1.7.0:
+prettier@^1.11.1:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.12.0.tgz#d26fc5894b9230de97629b39cae225b503724ce8"
+
+prettier@^1.7.0:
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.11.1.tgz#61e43fc4cd44e68f2b0dfc2c38cd4bb0fccdcc75"
 
@@ -6566,11 +6570,12 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     inherits "^2.0.1"
 
 rmwc@^1.5.1:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/rmwc/-/rmwc-1.5.2.tgz#2a53d5f8a894d95a6728b17a5a55a1d3d3bfefcc"
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/rmwc/-/rmwc-1.5.3.tgz#a514a75733d2e518d4e796ce46bc64d2c1ac710b"
   dependencies:
     classnames "^2.2.5"
     material-components-web "0.34.1"
+    prop-types "^15.6.1"
 
 run-async@^2.2.0:
   version "2.3.0"
