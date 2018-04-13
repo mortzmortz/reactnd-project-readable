@@ -6,6 +6,10 @@ import { Link } from 'react-router-dom';
 import './CategoriesSwitch.css';
 
 const CategoriesSwitch = ({ categories }) => {
+  const getButtonStyle = category => {
+    return category.name === categories.active;
+  };
+
   return (
     <div className="categories-switch">
       {categories.isFetching ? (
@@ -19,7 +23,7 @@ const CategoriesSwitch = ({ categories }) => {
               state: { category: category.name },
             }}
           >
-            <Button unelevated={category.name === categories.active}>
+            <Button unelevated={getButtonStyle(category)}>
               {category.name}
             </Button>
           </Link>

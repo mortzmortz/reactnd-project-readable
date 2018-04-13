@@ -7,6 +7,8 @@ import { LoadingIndicator, PostsList } from 'components/';
 import { getAllPosts } from 'redux/actions/posts';
 import { setActiveCategory } from 'redux/actions/categories';
 
+// TODO: add a simple postcard component
+
 class AllPostsView extends React.Component {
   static propTypes = {
     posts: PropTypes.object.isRequired,
@@ -33,7 +35,7 @@ class AllPostsView extends React.Component {
         ) : (
           <PostsList posts={postsList} sortBy={sorting.sortBy} />
         )}
-        <pre>{JSON.stringify(postsList, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(postsList, null, 2)}</pre> */}
       </div>
     );
   }
@@ -41,7 +43,7 @@ class AllPostsView extends React.Component {
 
 const mapStateToProps = state => ({
   posts: state.posts,
-  postsList: Object.values(state.posts.byId),
+  postsList: Object.values(state.posts.byId).filter(post => !post.deleted),
   categories: state.categories,
   sorting: state.sorting,
 });

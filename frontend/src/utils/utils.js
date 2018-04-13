@@ -1,3 +1,5 @@
+import { distanceInWords } from 'date-fns';
+
 export function normalizeById(posts) {
   return posts.reduce((acc, post) => {
     acc[post.id] = post;
@@ -12,4 +14,8 @@ export function normalize(list, prevState, asKey = 'id') {
     nextState[key] = post;
   });
   return nextState;
+}
+
+export function getRelativeDate(timestamp) {
+  return distanceInWords(timestamp, new Date());
 }

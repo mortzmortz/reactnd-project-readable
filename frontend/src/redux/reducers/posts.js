@@ -71,6 +71,7 @@ const posts = (state = initialState, action) => {
 
     case ADD_POST:
       const newPost = action.payload;
+      if (!newPost.id) return state;
       return {
         ...state,
         byId: {
@@ -88,11 +89,12 @@ const posts = (state = initialState, action) => {
       };
     case UPDATE_POST:
       const updatedPost = action.payload;
+      const updatedPosts = Object.values(state.byId).map(
+        post => (post.id !== updatedPost.id ? post : updatedPost)
+      );
       return {
         ...state,
-        byId: Object.values(state.byId).map(
-          post => (post.id !== updatedPost.id ? post : updatedPost)
-        ),
+        byId: normalizeById(updatedPosts),
       };
     default:
       return state;

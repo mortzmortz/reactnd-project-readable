@@ -1,4 +1,4 @@
-import { getData, postData } from 'server';
+import { getData, postData, deleteData } from 'server';
 
 export const FETCH_POSTS = '[posts] Fetch';
 export const FETCH_POSTS_SUCCESS = '[posts] Fetch Success';
@@ -93,10 +93,11 @@ export const updatePost = post => ({
   payload: post,
 });
 
-export const deletePost = postId => ({
-  type: DELETE_POST,
-  payload: postId,
-});
+export const deletePost = postId => dispatch => {
+  deleteData(`/posts/${postId}`).then(response =>
+    dispatch(updatePost(response.data))
+  );
+};
 
 // Vote Actions //-------------------------------------------------------------
 export const votePost = (postId, option) => dispatch => {

@@ -31,10 +31,9 @@ export const putData = (endpoint = '/', data = {}) =>
     headers,
   })();
 
-export const deleteData = (endpoint = '/', data = {}) =>
+export const deleteData = (endpoint = '/') =>
   axios.create({
     method: 'DELETE',
     baseURL: `${baseURL}${endpoint}`,
-    data,
     headers,
   })();

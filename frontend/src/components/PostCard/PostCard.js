@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { votePost } from 'redux/actions/posts';
 import {
   Card,
   CardPrimaryAction,
@@ -14,18 +13,31 @@ import {
 import { SimpleMenu, MenuItem } from 'rmwc/Menu';
 import { Typography } from 'rmwc/Typography';
 import { Button, ButtonIcon } from 'rmwc/Button';
-import { Chip, ChipText } from 'rmwc/Chip';
 import { Icon } from 'rmwc/Icon';
-import { distanceInWords } from 'date-fns';
+import { getRelativeDate } from 'utils/utils';
+
+import { deletePost, votePost } from 'redux/actions/posts';
 
 class PostCard extends React.Component {
   static propTypes = {
     post: PropTypes.object.isRequired,
+    showCommentCount: PropTypes.bool,
   };
 
-  getRelativeDate = timestamp => {
-    return distanceInWords(timestamp, new Date());
+  static defaultProps = {
+    showCommentCount: true,
   };
+
+  menuOptions = [
+    {
+      name: 'Edit',
+      fn: () => console.log('edit'),
+    },
+    {
+      name: 'Delete',
+      fn: id => this.props.deletePost(id),
+    },
+  ];
 
   handleCardClick = event => {
     event.stopPropagation();
@@ -34,6 +46,11 @@ class PostCard extends React.Component {
 
   handlePostVoteClick = (postId, option) => {
     this.props.votePost(postId, option);
+  };
+
+  handleMenuSelect = event => {
+    const { index } = event.detail;
+    this.menuOptions[index].fn(this.props.post.id);
   };
 
   render() {
@@ -58,17 +75,15 @@ class PostCard extends React.Component {
                   tag="div"
                   theme="text-secondary-on-background"
                 >
-                  {this.getRelativeDate(post.timestamp)}
+                  {getRelativeDate(post.timestamp)}
                 </Typography>
               </div>
-              <Chip style={{ pointerEvents: 'none' }}>
-                <ChipText style={{ textTransform: 'uppercase' }}>
-                  {post.category}
-                </ChipText>
-              </Chip>
             </div>
             <Typography use="title" tag="h2" style={{ marginBottom: 0 }}>
               {post.title}
+            </Typography>
+            <Typography use="body1" tag="p" style={{ marginBottom: 0 }}>
+              {post.body}
             </Typography>
           </div>
         </CardPrimaryAction>
@@ -92,26 +107,39 @@ class PostCard extends React.Component {
               <ButtonIcon use="thumb_down" style={styles.thumbIcon} />
             </Button>
           </CardActionButtons>
+          <Typography
+            use="button"
+            theme="text-secondary-on-background"
+            style={{ marginLeft: '4rem' }}
+          >
+            {post.category}
+          </Typography>
           <CardActionIcons>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-              }}
-            >
-              <Icon strategy="ligature">chat_bubble</Icon>
-              <Typography
-                use="body1"
-                tag="span"
-                theme="text-secondary-on-background"
-                style={{ marginLeft: '0.5rem' }}
+            {this.props.showCommentCount && (
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
               >
-                {post.commentCount}
-              </Typography>
-            </div>
-            <SimpleMenu handle={<CardAction icon use="more_vert" />}>
-              <MenuItem>Edit</MenuItem>
-              <MenuItem>Delete</MenuItem>
+                <Icon strategy="ligature">chat_bubble</Icon>
+                <Typography
+                  use="body1"
+                  tag="span"
+                  theme="text-secondary-on-background"
+                  style={{ marginLeft: '0.5rem' }}
+                >
+                  {post.commentCount}
+                </Typography>
+              </div>
+            )}
+            <SimpleMenu
+              handle={<CardAction icon use="more_vert" />}
+              onSelected={this.handleMenuSelect}
+            >
+              {this.menuOptions.map(option => (
+                <MenuItem key={option.name}>{option.name}</MenuItem>
+              ))}
             </SimpleMenu>
           </CardActionIcons>
         </CardActions>
@@ -124,7 +152,6 @@ const styles = {};
 
 styles.card = {
   marginTop: '2rem',
-  width: '100%',
 };
 
 styles.voteButton = {
@@ -137,6 +164,7 @@ styles.thumbIcon = {
 
 export default withRouter(
   connect(null, {
+    deletePost,
     votePost,
   })(PostCard)
 );

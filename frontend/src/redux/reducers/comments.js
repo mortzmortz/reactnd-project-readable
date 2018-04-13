@@ -3,6 +3,7 @@ import {
   FETCH_POST_COMMENTS,
   FETCH_POST_COMMENTS_SUCCESS,
   FETCH_POST_COMMENTS_FAILURE,
+  UPDATE_COMMENT,
 } from 'redux/actions/comments';
 
 const initialState = {
@@ -29,9 +30,17 @@ const comments = (state = initialState, action) => {
     case FETCH_POST_COMMENTS_FAILURE:
       return {
         ...state,
-        comments: null,
         isFetching: false,
         error: action.payload,
+      };
+    case UPDATE_COMMENT:
+      const updatedComment = action.payload;
+      const updatedComments = Object.values(state.byId).map(
+        post => (post.id !== updatedComment.id ? post : updatedComment)
+      );
+      return {
+        ...state,
+        byId: normalizeById(updatedComments),
       };
     default:
       return state;

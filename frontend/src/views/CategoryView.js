@@ -46,7 +46,6 @@ class CategoryView extends React.Component {
         ) : (
           <PostsList posts={postsList} sortBy={sorting.sortBy} />
         )}
-        <pre>{JSON.stringify(postsList, null, 2)}</pre>
       </div>
     );
   }

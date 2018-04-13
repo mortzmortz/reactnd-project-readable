@@ -6,7 +6,9 @@ import { withRouter } from 'react-router';
 import { getActivePost, resetActivePost } from 'redux/actions/posts';
 import { getPostComments } from 'redux/actions/comments';
 
-import { LoadingIndicator } from 'components/';
+import { LoadingIndicator, PostCardDetail } from 'components/';
+
+// TODO: add a simple postcard component
 
 class SinglePostView extends React.Component {
   static propTypes = {
@@ -23,6 +25,10 @@ class SinglePostView extends React.Component {
     this.props.getPostComments(post_id);
   }
 
+  componentDidUpdate() {
+    if (this.props.activePost.deleted) this.props.history.push(`/`);
+  }
+
   componentWillUnmount() {
     this.props.resetActivePost();
   }
@@ -35,10 +41,7 @@ class SinglePostView extends React.Component {
         {posts.isFetching ? (
           <LoadingIndicator />
         ) : (
-          <div>
-            <pre>{JSON.stringify(activePost, null, 2)}</pre>
-            {<pre>{JSON.stringify(commentsList, null, 2)}</pre>}
-          </div>
+          <PostCardDetail post={activePost} comments={commentsList} />
         )}
       </div>
     );
