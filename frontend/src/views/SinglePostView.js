@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { sortByKey } from 'utils/utils';
 
 import { getActivePost, resetActivePost } from 'redux/actions/posts';
@@ -47,10 +47,7 @@ class SinglePostView extends React.Component {
         ) : activePost.id ? (
           <PostCardDetail post={activePost} comments={commentsList} />
         ) : (
-          <div>
-            <p>Post not found</p>
-            <Link to="/">Go Back Home</Link>
-          </div>
+          <p className="route-error">Post not found</p>
         )}
       </div>
     );

@@ -19,7 +19,9 @@ const Routes = (
               path="/category/:category_name"
               component={Views.CategoryView}
             />
-            <Route render={() => <p>Not Found</p>} />
+            <Route
+              render={() => <p className="route-error">Page not found</p>}
+            />
           </Switch>
         </main>
       </React.Fragment>

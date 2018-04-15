@@ -27,3 +27,9 @@ p {
   margin: 0;
   padding: 0;
 }
+
+.route-error {
+  margin: 4rem 0;
+  font-size: 32px;
+  text-align: center;
+}
