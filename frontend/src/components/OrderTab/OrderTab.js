@@ -1,56 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Menu } from 'antd';
+
 import { changeSorting } from 'redux/actions/sorting';
-import { TabBar, Tab } from 'rmwc/Tabs';
 
 class OrderTab extends React.PureComponent {
   static propTypes = {
+    changeSorting: PropTypes.func.isRequired,
     sorting: PropTypes.object.isRequired,
     sortTabsList: PropTypes.array.isRequired,
   };
 
-  state = {
-    activeTabIndex: 0,
-  };
-
-  componentDidMount() {
-    const { sortBy, byName } = this.props.sorting;
-    const prevTab = byName[sortBy];
-    this.setState({ activeTabIndex: prevTab.index });
-  }
-
-  handleTabClick = (event, tab) => {
-    if (this.state.activeTabIndex !== tab.index) {
-      this.setState({ activeTabIndex: tab.index });
-      this.props.changeSorting(tab.name);
+  handleSelect = event => {
+    const { key } = event;
+    if (this.props.sorting.sortBy !== key) {
+      this.props.changeSorting(key);
     }
   };
 
   render() {
     const { sortTabsList } = this.props;
-    const { activeTabIndex } = this.state;
+
     return (
-      <TabBar activeTabIndex={activeTabIndex} style={styles.tabBar}>
+      <Menu
+        mode="horizontal"
+        onSelect={this.handleSelect}
+        defaultSelectedKeys={[this.props.sorting.sortBy]}
+      >
         {sortTabsList.map((tab, index) => (
-          <Tab
-            key={tab.path}
-            style={styles.tab}
-            onClick={event => this.handleTabClick(event, tab)}
-          >
+          <Menu.Item key={tab.path} style={styles.tab}>
             {tab.name}
-          </Tab>
+          </Menu.Item>
         ))}
-      </TabBar>
+      </Menu>
     );
   }
 }
 
 const styles = {};
-
-styles.tabBar = {
-  marginLeft: '0',
-};
 
 styles.tab = {
   minWidth: '100px',

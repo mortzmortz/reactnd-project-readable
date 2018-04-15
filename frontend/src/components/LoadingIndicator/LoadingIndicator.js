@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css';
 
-const LoadingIndicator = ({ centered }) => (
+const LoadingIndicator = () => (
   <div className="loading-indicator">
     <div className="loading-indicator__spinner" />
   </div>

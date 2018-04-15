@@ -1,8 +1,7 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^3.4.1",
     "axios": "^0.18.0",
     "cuid": "^2.1.1",
     "date-fns": "^1.29.0",
@@ -13,8 +12,7 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0",
-    "rmwc": "^1.5.3"
+    "redux-thunk": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

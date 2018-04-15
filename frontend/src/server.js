@@ -23,7 +23,7 @@ export const postData = (endpoint = '/', data = {}) =>
     headers,
   })();
 
-export const putData = (endpoint = '/', data = {}) =>
+export const editData = (endpoint = '/', data = {}) =>
   axios.create({
     method: 'PUT',
     baseURL: `${baseURL}${endpoint}`,

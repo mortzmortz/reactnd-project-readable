@@ -1,28 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { Link, withRouter } from 'react-router-dom';
+import { sortByKey } from 'utils/utils';
 
 import { getActivePost, resetActivePost } from 'redux/actions/posts';
-import { getPostComments } from 'redux/actions/comments';
+import { getPostComments, resetComments } from 'redux/actions/comments';
 
 import { LoadingIndicator, PostCardDetail } from 'components/';
 
-// TODO: add a simple postcard component
-
 class SinglePostView extends React.Component {
   static propTypes = {
-    posts: PropTypes.object.isRequired,
     activePost: PropTypes.object.isRequired,
     commentsList: PropTypes.array.isRequired,
     getActivePost: PropTypes.func.isRequired,
+    getPostComments: PropTypes.func.isRequired,
+    posts: PropTypes.object.isRequired,
     resetActivePost: PropTypes.func.isRequired,
+    resetComments: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
     const { post_id } = this.props.match.params;
-    this.props.getActivePost(post_id);
-    this.props.getPostComments(post_id);
+    if (post_id) {
+      this.props.getActivePost(post_id);
+      this.props.getPostComments(post_id);
+    }
   }
 
   componentDidUpdate() {
@@ -31,6 +34,7 @@ class SinglePostView extends React.Component {
 
   componentWillUnmount() {
     this.props.resetActivePost();
+    this.props.resetComments();
   }
 
   render() {
@@ -40,8 +44,13 @@ class SinglePostView extends React.Component {
       <div>
         {posts.isFetching ? (
           <LoadingIndicator />
-        ) : (
+        ) : activePost.id ? (
           <PostCardDetail post={activePost} comments={commentsList} />
+        ) : (
+          <div>
+            <p>Post not found</p>
+            <Link to="/">Go Back Home</Link>
+          </div>
         )}
       </div>
     );
@@ -49,15 +58,17 @@ class SinglePostView extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  posts: state.posts,
   activePost: state.posts.byId[state.posts.active] || {},
-  commentsList: Object.values(state.comments.byId) || [],
+  commentsList:
+    sortByKey(Object.values(state.comments.byId), 'timestamp') || [],
+  posts: state.posts,
 });
 
 export default withRouter(
   connect(mapStateToProps, {
     getActivePost,
-    getPostComments,
     resetActivePost,
+    getPostComments,
+    resetComments,
   })(SinglePostView)
 );

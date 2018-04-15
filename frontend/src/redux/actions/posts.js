@@ -1,4 +1,4 @@
-import { getData, postData, deleteData } from 'server';
+import { getData, postData, deleteData, editData } from 'server';
 
 export const FETCH_POSTS = '[posts] Fetch';
 export const FETCH_POSTS_SUCCESS = '[posts] Fetch Success';
@@ -10,7 +10,6 @@ export const RESET_ACTIVE_POST = '[posts] Reset Active Post';
 export const ADD_POST = '[posts] Add Post';
 export const UPDATE_POST = '[posts] Update Post';
 export const DELETE_POST = '[posts] Delete Post';
-export const RECEIVE_COMMENT = '[posts] Receive Comment';
 
 // Multiple Posts //-----------------------------------------------------------
 export const fetchPosts = () => ({
@@ -83,7 +82,7 @@ export const resetActivePost = () => ({
 });
 
 // Post Actions //-------------------------------------------------------------
-export const addPost = post => ({
+export const receivePost = post => ({
   type: ADD_POST,
   payload: post,
 });
@@ -92,6 +91,18 @@ export const updatePost = post => ({
   type: UPDATE_POST,
   payload: post,
 });
+
+export const addPost = data => dispatch => {
+  postData('/posts', data).then(response =>
+    dispatch(receivePost(response.data))
+  );
+};
+
+export const editPost = (postId, data) => dispatch => {
+  editData(`/posts/${postId}`, data).then(response =>
+    dispatch(updatePost(response.data))
+  );
+};
 
 export const deletePost = postId => dispatch => {
   deleteData(`/posts/${postId}`).then(response =>

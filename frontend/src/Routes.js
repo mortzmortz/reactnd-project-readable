@@ -13,7 +13,7 @@ const Routes = (
         <main>
           <Switch>
             <Route exact path="/" component={Views.AllPostsView} />
-            <Route path="/post/new" component={Views.NewPostView} />
+            <Route path="/post/new" component={Views.CreateNewPostView} />
             <Route path="/post/:post_id" component={Views.SinglePostView} />
             <Route
               path="/category/:category_name"

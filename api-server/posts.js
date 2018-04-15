@@ -25,17 +25,6 @@ const defaultData = {
     deleted: false,
     commentCount: 0
   },
-  "pd0sl3vyvxm095f1mmfr": {
-    id: 'pd0sl3vyvxm095f1mmfr',
-    timestamp: 1423207641143,
-    title: 'Diesdas Ananans',
-    body: 'Small batch paleo kale chips, meggings everyday carry glossier pug +1 cred synth fam selvage fanny pack bicycle rights.',
-    author: 'thingthree',
-    category: 'redux',
-    voteScore: 12,
-    deleted: false,
-    commentCount: 0
-  }
 }
 
 function getData(token) {

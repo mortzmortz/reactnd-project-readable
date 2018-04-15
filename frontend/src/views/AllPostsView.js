@@ -7,16 +7,14 @@ import { LoadingIndicator, PostsList } from 'components/';
 import { getAllPosts } from 'redux/actions/posts';
 import { setActiveCategory } from 'redux/actions/categories';
 
-// TODO: add a simple postcard component
-
 class AllPostsView extends React.Component {
   static propTypes = {
+    categories: PropTypes.object.isRequired,
+    getAllPosts: PropTypes.func.isRequired,
     posts: PropTypes.object.isRequired,
     postsList: PropTypes.array.isRequired,
-    categories: PropTypes.object.isRequired,
-    sorting: PropTypes.object.isRequired,
-    getAllPosts: PropTypes.func.isRequired,
     setActiveCategory: PropTypes.func.isRequired,
+    sorting: PropTypes.object.isRequired,
   };
 
   componentDidMount = () => {
@@ -33,9 +31,12 @@ class AllPostsView extends React.Component {
         {posts.isFetching ? (
           <LoadingIndicator />
         ) : (
-          <PostsList posts={postsList} sortBy={sorting.sortBy} />
+          <PostsList
+            posts={postsList}
+            sortBy={sorting.sortBy}
+            simpleCard={true}
+          />
         )}
-        {/* <pre>{JSON.stringify(postsList, null, 2)}</pre> */}
       </div>
     );
   }

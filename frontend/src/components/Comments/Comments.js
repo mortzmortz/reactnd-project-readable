@@ -1,12 +1,19 @@
 import React from 'react';
-import { Card } from 'rmwc/Card';
+import PropTypes from 'prop-types';
+import { Card, Timeline } from 'antd';
 import { Comment, NewComment } from 'components/';
 
 const Comments = ({ comments }) => (
-  <Card style={{ marginTop: '1rem' }}>
+  <Card style={{ marginTop: '-1px' }}>
     <NewComment />
-    {comments.map(comment => <Comment key={comment.id} comment={comment} />)}
+    <Timeline style={{ marginTop: '2rem' }}>
+      {comments.map(comment => <Comment key={comment.id} comment={comment} />)}
+    </Timeline>
   </Card>
 );
+
+Comments.propTypes = {
+  comments: PropTypes.array.isRequired,
+};
 
 export default Comments;

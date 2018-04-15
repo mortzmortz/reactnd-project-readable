@@ -1,0 +1,21 @@
+.post-meta--author {
+  margin-right: 0.5rem;
+}
+
+.post-meta--date::before {
+  content: "\00b7";
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.post-meta--score {
+  display: inline-block;
+  min-width: 2rem;
+  margin: 0 0.5rem;
+  text-align: center;
+}
+
+.post-body {
+  font-size: 20px;
+  margin-top: 2rem;
+}

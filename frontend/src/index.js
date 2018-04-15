@@ -6,7 +6,6 @@ import registerServiceWorker from './registerServiceWorker';
 import store from './redux/store';
 import Routes from './Routes';
 
-import 'material-components-web/dist/material-components-web.min.css';
 import './styles/index.css';
 
 const rootEl = document.getElementById('root');

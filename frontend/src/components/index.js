@@ -3,6 +3,7 @@ export {
 } from './CategoriesSwitch/CategoriesSwitch';
 export { default as Comment } from './Comment/Comment';
 export { default as Comments } from './Comments/Comments';
+export { default as CreatNewPost } from './CreatNewPost/CreatNewPost';
 export { default as Header } from './Header/Header';
 export {
   default as LoadingIndicator,

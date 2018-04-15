@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+
 import { setActiveCategory } from 'redux/actions/categories';
 import { getAllPostsByCategory } from 'redux/actions/posts';
 
@@ -9,9 +10,11 @@ import { LoadingIndicator, PostsList } from 'components/';
 
 class CategoryView extends React.Component {
   static propTypes = {
+    categories: PropTypes.object.isRequired,
+    getAllPostsByCategory: PropTypes.func.isRequired,
     posts: PropTypes.object.isRequired,
     postsList: PropTypes.array.isRequired,
-    categories: PropTypes.object.isRequired,
+    setActiveCategory: PropTypes.func.isRequired,
     sorting: PropTypes.object.isRequired,
   };
 
@@ -44,7 +47,11 @@ class CategoryView extends React.Component {
         {posts.isFetching ? (
           <LoadingIndicator />
         ) : (
-          <PostsList posts={postsList} sortBy={sorting.sortBy} />
+          <PostsList
+            posts={postsList}
+            sortBy={sorting.sortBy}
+            simpleCard={true}
+          />
         )}
       </div>
     );
@@ -52,9 +59,9 @@ class CategoryView extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  categories: state.categories,
   posts: state.posts,
   postsList: Object.values(state.posts.byId),
-  categories: state.categories,
   sorting: state.sorting,
 });
 

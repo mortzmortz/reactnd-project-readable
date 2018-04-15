@@ -29,9 +29,12 @@ const posts = (state = initialState, action) => {
         error: null,
       };
     case FETCH_POSTS_SUCCESS:
+      // FIXME: after delete on server, server returns broken post object
+      // temporary fix: filter posts
+      const newPosts = action.payload.filter(post => post.id);
       return {
         ...state,
-        byId: normalizeById(action.payload),
+        byId: normalizeById(newPosts),
         isFetching: false,
         error: null,
       };
@@ -70,14 +73,12 @@ const posts = (state = initialState, action) => {
       };
 
     case ADD_POST:
+    case UPDATE_POST:
       const newPost = action.payload;
       if (!newPost.id) return state;
       return {
         ...state,
-        byId: {
-          ...state.byId,
-          [newPost.id]: newPost,
-        },
+        byId: Object.assign(state.byId, { [newPost.id]: newPost }),
       };
     case DELETE_POST:
       const postToDelete = action.payload;
@@ -86,15 +87,6 @@ const posts = (state = initialState, action) => {
         byId: Object.values(state.byId).filter(
           post => (post.id !== postToDelete.id ? post : postToDelete)
         ),
-      };
-    case UPDATE_POST:
-      const updatedPost = action.payload;
-      const updatedPosts = Object.values(state.byId).map(
-        post => (post.id !== updatedPost.id ? post : updatedPost)
-      );
-      return {
-        ...state,
-        byId: normalizeById(updatedPosts),
       };
     default:
       return state;

@@ -1,9 +1,5 @@
-.global-header {
-  background-color: lavender;
-}
-
 .global-header .inner {
-  max-width: 600px;
+  max-width: 720px;
   padding: 20px;
   margin-left: auto;
   margin-right: auto;

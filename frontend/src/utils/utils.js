@@ -19,3 +19,6 @@ export function normalize(list, prevState, asKey = 'id') {
 export function getRelativeDate(timestamp) {
   return distanceInWords(timestamp, new Date());
 }
+
+export const sortByKey = (list, sortKey) =>
+  list.sort((a, b) => a[sortKey] < b[sortKey]);

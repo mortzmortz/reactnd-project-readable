@@ -3,12 +3,10 @@ import { CHANGE_SORTING } from 'redux/actions/sorting';
 const initialState = {
   byName: {
     new: {
-      index: 0,
       name: 'new',
       path: 'new',
     },
     popular: {
-      index: 1,
       name: 'popular',
       path: 'popular',
     },
