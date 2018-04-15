@@ -6,7 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import store from './redux/store';
 import Routes from './Routes';
 
-import './styles/index.css';
+import './index.css';
 
 const rootEl = document.getElementById('root');
 
