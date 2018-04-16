@@ -52,7 +52,14 @@ class Comment extends React.Component {
   reset = () => {
     this.setState({
       isEditing: false,
+      hasError: false,
       editBody: this.props.comment.body,
+    });
+  };
+
+  validate = () => {
+    this.setState({
+      hasError: this.state.editBody === '',
     });
   };
 
@@ -67,9 +74,12 @@ class Comment extends React.Component {
 
   handleEditInputChange = event => {
     const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-    });
+    this.setState(
+      {
+        [name]: value,
+      },
+      this.validate
+    );
   };
 
   handleEditCancelAction = () => {
@@ -77,7 +87,6 @@ class Comment extends React.Component {
   };
 
   handleEditSubmitAction = () => {
-    // TODO: add validation
     const data = {
       timestamp: Date.now(),
       body: this.state.editBody,
@@ -117,7 +126,12 @@ class Comment extends React.Component {
               />
               <Button.Group size="small" style={styles.editCommentButtons}>
                 <Button onClick={this.handleEditCancelAction}>Cancel</Button>
-                <Button onClick={this.handleEditSubmitAction}>Submit</Button>
+                <Button
+                  onClick={this.handleEditSubmitAction}
+                  disabled={this.state.hasError}
+                >
+                  Submit
+                </Button>
               </Button.Group>
             </div>
           ) : (

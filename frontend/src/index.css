@@ -28,6 +28,13 @@ p {
   padding: 0;
 }
 
+.is-disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+  color: #F5225A;
+}
+
 .route-error {
   margin: 4rem 0;
   font-size: 32px;

@@ -19,6 +19,7 @@ class NewComment extends React.Component {
     author: '',
     content: '',
     isEditing: false,
+    hasError: true,
   };
 
   reset = () => {
@@ -26,6 +27,13 @@ class NewComment extends React.Component {
       author: '',
       content: '',
       isEditing: false,
+      hasError: true,
+    });
+  };
+
+  validate = () => {
+    this.setState({
+      hasError: this.state.author === '' || this.state.content === '',
     });
   };
 
@@ -54,9 +62,12 @@ class NewComment extends React.Component {
   handleInputChange = event => {
     const { name, value } = event.target;
 
-    this.setState({
-      [name]: value,
-    });
+    this.setState(
+      {
+        [name]: value,
+      },
+      this.validate
+    );
   };
 
   render() {
@@ -66,7 +77,12 @@ class NewComment extends React.Component {
           <Card
             actions={[
               <p onClick={this.handleCancelEditAction}>Cancel</p>,
-              <p onClick={this.handleSubmitEditAction}>Submit</p>,
+              <p
+                onClick={this.handleSubmitEditAction}
+                className={this.state.hasError ? 'is-disabled' : ''}
+              >
+                Submit
+              </p>,
             ]}
           >
             <Form.Item label="Author">

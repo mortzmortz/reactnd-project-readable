@@ -26,6 +26,7 @@ class PostCard extends React.Component {
 
   state = {
     isEditing: false,
+    hasError: false,
     editTitle: this.props.post.title,
     editBody: this.props.post.body,
   };
@@ -33,6 +34,15 @@ class PostCard extends React.Component {
   reset = () => {
     this.setState({
       isEditing: false,
+      hasError: false,
+      editTitle: this.props.post.title,
+      editBody: this.props.post.body,
+    });
+  };
+
+  validate = () => {
+    this.setState({
+      hasError: this.state.editTitle === '' || this.state.editBody === '',
     });
   };
 
@@ -65,9 +75,12 @@ class PostCard extends React.Component {
 
   handleEditInputChange = event => {
     const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-    });
+    this.setState(
+      {
+        [name]: value,
+      },
+      this.validate
+    );
   };
 
   render() {
@@ -79,7 +92,12 @@ class PostCard extends React.Component {
           style={styles.card}
           actions={[
             <p onClick={this.handleCancelEditAction}>Cancel</p>,
-            <p onClick={this.handleSubmitEditAction}>Submit</p>,
+            <p
+              onClick={this.handleSubmitEditAction}
+              className={this.state.hasError ? 'is-disabled' : ''}
+            >
+              Submit
+            </p>,
           ]}
         >
           <Form.Item label="Title">
