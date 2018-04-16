@@ -32,7 +32,7 @@ class AllPostsView extends React.Component {
         {posts.isFetching ? (
           <LoadingIndicator />
         ) : (
-          <PostsList posts={sortedPosts} simpleCard={true} />
+          <PostsList posts={sortedPosts} allPosts={posts} simpleCard={true} />
         )}
       </div>
     );

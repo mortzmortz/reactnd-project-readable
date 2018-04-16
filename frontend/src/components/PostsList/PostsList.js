@@ -5,13 +5,13 @@ import './PostsList.css';
 
 class PostsList extends React.Component {
   static propTypes = {
+    allPosts: PropTypes.object.isRequired,
     posts: PropTypes.array.isRequired,
     simpleCard: PropTypes.bool,
   };
 
   render() {
-    const { posts } = this.props;
-    // const sortedPosts = this.getSortedPosts(posts, sortBy);
+    const { posts, allPosts } = this.props;
 
     return (
       <div className="posts-list">
@@ -21,6 +21,7 @@ class PostsList extends React.Component {
           <PostCard
             key={post.id}
             post={post}
+            posts={allPosts}
             simpleCard={this.props.simpleCard}
           />
         ))}
