@@ -139,12 +139,10 @@ class PostCard extends React.Component {
               onClick={() => this.handlePostVoteClick(post.id, 'downVote')}
             />
           </div>
-          {this.props.simpleCard && (
-            <div style={styles.commentCount}>
-              <Icon type="message" style={styles.commentIcon} />
-              {post.commentCount}
-            </div>
-          )}
+          <div style={styles.commentCount}>
+            <Icon type="message" style={styles.commentIcon} />
+            {post.commentCount}
+          </div>
         </div>
       </Card>
     );
