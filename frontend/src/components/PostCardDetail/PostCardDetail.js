@@ -12,14 +12,15 @@ class PostCardDetail extends React.Component {
   static propTypes = {
     comments: PropTypes.array.isRequired,
     post: PropTypes.object.isRequired,
+    posts: PropTypes.object.isRequired,
     votePost: PropTypes.func.isRequired,
   };
 
   render() {
-    const { post, comments } = this.props;
+    const { posts, post, comments } = this.props;
     return (
       <React.Fragment>
-        <PostCard key={post.id} post={post} />
+        <PostCard key={post.id} posts={posts} post={post} />
         <Comments comments={comments} />
       </React.Fragment>
     );

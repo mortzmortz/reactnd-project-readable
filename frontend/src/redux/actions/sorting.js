@@ -1,6 +1,6 @@
-export const CHANGE_SORTING = '[sorting] Change';
+import * as types from '../types';
 
 export const changeSorting = sortBy => ({
-  type: CHANGE_SORTING,
+  type: types.CHANGE_SORTING,
   payload: sortBy,
 });

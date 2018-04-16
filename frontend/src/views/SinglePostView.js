@@ -46,7 +46,11 @@ class SinglePostView extends React.Component {
         {posts.isFetching ? (
           <LoadingIndicator />
         ) : activePost.id ? (
-          <PostCardDetail post={activePost} comments={commentsList} />
+          <PostCardDetail
+            posts={posts}
+            post={activePost}
+            comments={commentsList}
+          />
         ) : (
           <p className="route-error">Post not found</p>
         )}

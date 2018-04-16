@@ -1,4 +1,4 @@
-import { CHANGE_SORTING } from 'redux/actions/sorting';
+import * as types from '../types';
 
 const initialState = {
   byName: {
@@ -16,7 +16,7 @@ const initialState = {
 
 const sorting = (state = initialState, action) => {
   switch (action.type) {
-    case CHANGE_SORTING:
+    case types.CHANGE_SORTING:
       return {
         ...state,
         sortBy: action.payload,

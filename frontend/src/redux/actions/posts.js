@@ -1,31 +1,21 @@
 import { getData, postData, deleteData, editData } from 'server';
-
-export const FETCH_POSTS = '[posts] Fetch';
-export const FETCH_POSTS_SUCCESS = '[posts] Fetch Success';
-export const FETCH_POSTS_FAILURE = '[posts] Fetch Error';
-export const FETCH_ACTIVE_POST = '[posts] Fetch Active';
-export const FETCH_ACTIVE_POST_SUCCESS = '[posts] Fetch Active Success';
-export const FETCH_ACTIVE_POST_FAILURE = '[posts] Fetch Active Error';
-export const RESET_ACTIVE_POST = '[posts] Reset Active Post';
-export const ADD_POST = '[posts] Add Post';
-export const UPDATE_POST = '[posts] Update Post';
-export const DELETE_POST = '[posts] Delete Post';
+import * as types from '../types';
 
 // Multiple Posts //-----------------------------------------------------------
 export const fetchPosts = () => ({
-  type: FETCH_POSTS,
+  type: types.FETCH_POSTS,
 });
 
 export const fetchPostsSuccess = response => {
   return {
-    type: FETCH_POSTS_SUCCESS,
+    type: types.FETCH_POSTS_SUCCESS,
     payload: response,
   };
 };
 
 export const fetchPostsFailure = error => {
   return {
-    type: FETCH_POSTS_FAILURE,
+    type: types.FETCH_POSTS_FAILURE,
     payload: error,
   };
 };
@@ -47,19 +37,19 @@ export const getAllPostsByCategory = category => dispatch => {
 
 // Active Post //--------------------------------------------------------------
 export const fetchActivePost = () => ({
-  type: FETCH_ACTIVE_POST,
+  type: types.FETCH_ACTIVE_POST,
 });
 
 export const fetchActivePostSuccess = response => {
   return {
-    type: FETCH_ACTIVE_POST_SUCCESS,
+    type: types.FETCH_ACTIVE_POST_SUCCESS,
     payload: response,
   };
 };
 
 export const fetchActivePostFailure = error => {
   return {
-    type: FETCH_ACTIVE_POST_FAILURE,
+    type: types.FETCH_ACTIVE_POST_FAILURE,
     payload: error,
   };
 };
@@ -71,24 +61,24 @@ export const getActivePost = postId => dispatch => {
       response =>
         Promise.all[
           (dispatch(fetchActivePostSuccess(response.data)),
-          dispatch(addPost(response.data)))
+          dispatch(updatePost(response.data)))
         ]
     )
     .catch(error => dispatch(fetchActivePostFailure(error)));
 };
 
 export const resetActivePost = () => ({
-  type: RESET_ACTIVE_POST,
+  type: types.RESET_ACTIVE_POST,
 });
 
 // Post Actions //-------------------------------------------------------------
 export const receivePost = post => ({
-  type: ADD_POST,
+  type: types.ADD_POST,
   payload: post,
 });
 
 export const updatePost = post => ({
-  type: UPDATE_POST,
+  type: types.UPDATE_POST,
   payload: post,
 });
 

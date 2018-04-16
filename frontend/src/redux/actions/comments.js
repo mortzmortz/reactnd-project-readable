@@ -1,27 +1,21 @@
 import { getData, postData, deleteData, editData } from 'server';
-
-export const FETCH_POST_COMMENTS = '[comments] Fetch';
-export const FETCH_POST_COMMENTS_SUCCESS = '[comments] Fetch Success';
-export const FETCH_POST_COMMENTS_FAILURE = '[comments] Fetch Error';
-export const UPDATE_COMMENT = '[comments] Update';
-export const EDIT_COMMENT = '[comments] Edit';
-export const ADD_COMMENT = '[comments] Add';
-export const RESET_COMMENTS = '[comments] Reset';
+import * as types from '../types';
+import { updatePost } from './posts';
 
 export const fetchComments = () => ({
-  type: FETCH_POST_COMMENTS,
+  type: types.FETCH_POST_COMMENTS,
 });
 
 export const fetchCommentsSuccess = comments => {
   return {
-    type: FETCH_POST_COMMENTS_SUCCESS,
+    type: types.FETCH_POST_COMMENTS_SUCCESS,
     payload: comments,
   };
 };
 
 export const fetchCommentsFailure = error => {
   return {
-    type: FETCH_POST_COMMENTS_FAILURE,
+    type: types.FETCH_POST_COMMENTS_FAILURE,
     payload: error,
   };
 };
@@ -33,23 +27,30 @@ export const getPostComments = postId => dispatch => {
     .catch(error => dispatch(fetchCommentsFailure(error)));
 };
 
-export const deleteComment = commentId => dispatch => {
-  deleteData(`/comments/${commentId}`).then(response =>
-    dispatch(updateComment(response.data))
-  );
+export const deleteComment = commentId => (dispatch, getState) => {
+  deleteData(`/comments/${commentId}`).then(response => {
+    const newComment = response.data;
+    const { parentId } = newComment;
+    const { posts } = getState();
+    const postToUpdate = posts.byId[parentId];
+    postToUpdate.commentCount--;
+    return Promise.all[
+      (dispatch(updateComment(newComment)), dispatch(updatePost(postToUpdate)))
+    ];
+  });
 };
 
 export const resetComments = () => ({
-  type: RESET_COMMENTS,
+  type: types.RESET_COMMENTS,
 });
 
 export const updateComment = comment => ({
-  type: UPDATE_COMMENT,
+  type: types.UPDATE_COMMENT,
   payload: comment,
 });
 
 export const receiveComment = comment => ({
-  type: ADD_COMMENT,
+  type: types.ADD_COMMENT,
   payload: comment,
 });
 
@@ -59,10 +60,17 @@ export const editComment = (commentId, data) => dispatch => {
   );
 };
 
-export const addComment = data => dispatch => {
-  postData('/comments', data).then(response =>
-    dispatch(receiveComment(response.data))
-  );
+export const addComment = data => (dispatch, getState) => {
+  postData('/comments', data).then(response => {
+    const newComment = response.data;
+    const { parentId } = newComment;
+    const { posts } = getState();
+    const postToUpdate = posts.byId[parentId];
+    postToUpdate.commentCount++;
+    return Promise.all[
+      (dispatch(receiveComment(newComment)), dispatch(updatePost(postToUpdate)))
+    ];
+  });
 };
 
 export const voteComment = (commentId, option) => dispatch => {

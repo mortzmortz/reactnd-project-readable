@@ -15,6 +15,7 @@ class PostCard extends React.Component {
     deletePost: PropTypes.func.isRequired,
     editPost: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired,
+    posts: PropTypes.object.isRequired,
     simpleCard: PropTypes.bool,
     votePost: PropTypes.func.isRequired,
   };
@@ -71,6 +72,7 @@ class PostCard extends React.Component {
 
   render() {
     const { post } = this.props;
+
     if (this.state.isEditing) {
       return (
         <Card

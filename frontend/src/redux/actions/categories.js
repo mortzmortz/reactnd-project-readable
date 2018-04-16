@@ -1,25 +1,21 @@
 import { getData } from 'server';
-
-export const FETCH_CATEGORIES = '[categories] Fetch';
-export const FETCH_CATEGORIES_SUCCESS = '[categories] Fetch Success';
-export const FETCH_CATEGORIES_FAILURE = '[categories] Fetch Error';
-export const SET_ACTIVE_CATEGORY = '[categories] Set';
+import * as types from '../types';
 
 // posts
 export const fetchCategories = () => ({
-  type: FETCH_CATEGORIES,
+  type: types.FETCH_CATEGORIES,
 });
 
 export const fetchCategoriesSuccess = categories => {
   return {
-    type: FETCH_CATEGORIES_SUCCESS,
+    type: types.FETCH_CATEGORIES_SUCCESS,
     payload: categories,
   };
 };
 
 export const fetchCategoriesFailure = error => {
   return {
-    type: FETCH_CATEGORIES_FAILURE,
+    type: types.FETCH_CATEGORIES_FAILURE,
     payload: error,
   };
 };
@@ -35,7 +31,7 @@ export const getAllCategories = () => dispatch => {
 
 export const setActiveCategory = category => {
   return {
-    type: SET_ACTIVE_CATEGORY,
+    type: types.SET_ACTIVE_CATEGORY,
     payload: category,
   };
 };
