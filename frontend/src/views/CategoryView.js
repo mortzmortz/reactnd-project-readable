@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { sortByKey } from 'utils/utils';
 
 import { setActiveCategory } from 'redux/actions/categories';
 import { getAllPostsByCategory } from 'redux/actions/posts';
@@ -13,18 +15,17 @@ class CategoryView extends React.Component {
     categories: PropTypes.object.isRequired,
     getAllPostsByCategory: PropTypes.func.isRequired,
     posts: PropTypes.object.isRequired,
-    postsList: PropTypes.array.isRequired,
+    sortedPosts: PropTypes.array.isRequired,
     setActiveCategory: PropTypes.func.isRequired,
-    sorting: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
     const { current } = this.props.categories;
-    const { category_name } = this.props.match.params;
+    const { category } = this.props.match.params;
 
-    if (current !== category_name) {
-      this.props.setActiveCategory(category_name);
-      this.props.getAllPostsByCategory(category_name);
+    if (current !== category) {
+      this.props.setActiveCategory(category);
+      this.props.getAllPostsByCategory(category);
     }
   }
 
@@ -40,34 +41,36 @@ class CategoryView extends React.Component {
   }
 
   render() {
-    const { posts, postsList, sorting } = this.props;
+    const { posts, sortedPosts } = this.props;
 
     return (
       <div className="posts-list">
         {posts.isFetching ? (
           <LoadingIndicator />
         ) : (
-          <PostsList
-            posts={postsList}
-            sortBy={sorting.sortBy}
-            simpleCard={true}
-          />
+          <PostsList posts={sortedPosts} simpleCard={true} />
         )}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  categories: state.categories,
-  posts: state.posts,
-  postsList: Object.values(state.posts.byId),
-  sorting: state.sorting,
-});
+const mapStateToProps = state => {
+  const validPostsList = Object.values(state.posts.byId).filter(
+    post => !post.deleted
+  );
+  const sortParam = state.sorting.sortBy === 'new' ? 'timestamp' : 'voteScore';
+  return {
+    categories: state.categories,
+    posts: state.posts,
+    sortedPosts: sortByKey(validPostsList, sortParam),
+  };
+};
 
-export default withRouter(
+export default compose(
+  withRouter,
   connect(mapStateToProps, {
     setActiveCategory,
     getAllPostsByCategory,
-  })(CategoryView)
-);
+  })
+)(CategoryView);

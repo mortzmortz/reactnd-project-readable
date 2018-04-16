@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getRelativeDate } from 'utils/utils';
@@ -195,10 +196,11 @@ styles.thumbIcon = {
   marginRight: 0,
 };
 
-export default withRouter(
+export default compose(
+  withRouter,
   connect(null, {
     deleteComment,
     editComment,
     voteComment,
-  })(Comment)
-);
+  })
+)(Comment);

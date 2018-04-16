@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { sortByKey } from 'utils/utils';
 
 import { LoadingIndicator, PostsList } from 'components/';
 
@@ -12,9 +14,8 @@ class AllPostsView extends React.Component {
     categories: PropTypes.object.isRequired,
     getAllPosts: PropTypes.func.isRequired,
     posts: PropTypes.object.isRequired,
-    postsList: PropTypes.array.isRequired,
+    sortedPosts: PropTypes.array.isRequired,
     setActiveCategory: PropTypes.func.isRequired,
-    sorting: PropTypes.object.isRequired,
   };
 
   componentDidMount = () => {
@@ -24,32 +25,35 @@ class AllPostsView extends React.Component {
   };
 
   render() {
-    const { posts, postsList, sorting } = this.props;
+    const { posts, sortedPosts } = this.props;
 
     return (
       <div className="posts-list">
         {posts.isFetching ? (
           <LoadingIndicator />
         ) : (
-          <PostsList
-            posts={postsList}
-            sortBy={sorting.sortBy}
-            simpleCard={true}
-          />
+          <PostsList posts={sortedPosts} simpleCard={true} />
         )}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  posts: state.posts,
-  postsList: Object.values(state.posts.byId).filter(post => !post.deleted),
-  categories: state.categories,
-  sorting: state.sorting,
-});
+const mapStateToProps = state => {
+  const validPostsList = Object.values(state.posts.byId).filter(
+    post => !post.deleted
+  );
+  const sortParam = state.sorting.sortBy === 'new' ? 'timestamp' : 'voteScore';
+  return {
+    categories: state.categories,
+    posts: state.posts,
+    sortedPosts: sortByKey(validPostsList, sortParam),
+  };
+};
 
-export default connect(mapStateToProps, {
-  getAllPosts,
-  setActiveCategory,
-})(AllPostsView);
+export default compose(
+  connect(mapStateToProps, {
+    getAllPosts,
+    setActiveCategory,
+  })
+)(AllPostsView);

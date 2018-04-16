@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { sortByKey } from 'utils/utils';
@@ -39,9 +40,10 @@ const mapStateToProps = state => ({
   posts: state.posts,
 });
 
-export default withRouter(
+export default compose(
+  withRouter,
   connect(mapStateToProps, {
     getActivePost,
     getPostComments,
-  })(CreateNewPostView)
-);
+  })
+)(CreateNewPostView);

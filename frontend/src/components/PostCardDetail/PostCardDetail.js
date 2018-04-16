@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { votePost } from 'redux/actions/posts';
 
@@ -25,8 +26,9 @@ class PostCardDetail extends React.Component {
   }
 }
 
-export default withRouter(
+export default compose(
+  withRouter,
   connect(null, {
     votePost,
-  })(PostCardDetail)
-);
+  })
+)(PostCardDetail);

@@ -1,15 +1,18 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Card } from 'antd';
 
-const NewPost = ({ history }) => (
-  <Card
-    hoverable="true"
-    style={styles.card}
-    onClick={() => history.push(`/post/new`)}
+const NewPost = ({ match }) => (
+  <Link
+    to={{
+      pathname: '/new',
+      state: { fromCategory: match.params.category },
+    }}
   >
-    <p>New Post</p>
-  </Card>
+    <Card hoverable="true" style={styles.card}>
+      <p>New Post</p>
+    </Card>
+  </Link>
 );
 
 const styles = {};

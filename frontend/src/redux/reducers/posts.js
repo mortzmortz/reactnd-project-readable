@@ -30,7 +30,7 @@ const posts = (state = initialState, action) => {
       };
     case FETCH_POSTS_SUCCESS:
       // FIXME: after delete on server, server returns broken post object
-      // temporary fix: filter posts
+      // temporary fix: filter out posts with no id
       const newPosts = action.payload.filter(post => post.id);
       return {
         ...state,

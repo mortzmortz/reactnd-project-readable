@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
@@ -93,8 +94,9 @@ class NewComment extends React.Component {
   }
 }
 
-export default withRouter(
+export default compose(
+  withRouter,
   connect(null, {
     addComment,
-  })(NewComment)
-);
+  })
+)(NewComment);

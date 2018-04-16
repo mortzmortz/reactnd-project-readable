@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { Card, Form, Input, Radio } from 'antd';
 
@@ -19,16 +20,7 @@ class CreatNewPost extends React.Component {
     title: '',
     author: '',
     content: '',
-    category: 'react',
-  };
-
-  reset = () => {
-    this.setState({
-      title: '',
-      author: '',
-      content: '',
-      category: 'react',
-    });
+    category: this.props.location.state.fromCategory || 'react',
   };
 
   handleSubmitEditAction = event => {
@@ -118,8 +110,10 @@ styles.cardAction = {
 const mapStateToProps = state => ({
   categories: state.categories,
 });
-export default withRouter(
+
+export default compose(
+  withRouter,
   connect(mapStateToProps, {
     addPost,
-  })(CreatNewPost)
-);
+  })
+)(CreatNewPost);

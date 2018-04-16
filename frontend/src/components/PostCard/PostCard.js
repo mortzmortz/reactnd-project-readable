@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
 import { getRelativeDate } from 'utils/utils';
 
 import { deletePost, votePost, editPost } from 'redux/actions/posts';
@@ -103,10 +104,10 @@ class PostCard extends React.Component {
           <p onClick={this.handleEditAction}>Edit</p>,
           <p onClick={this.handleDeleteAction}>Delete</p>,
         ]}
-        title={<Link to={`/post/${post.id}`}>{post.title}</Link>}
+        title={<Link to={`/${post.category}/${post.id}`}>{post.title}</Link>}
         extra={
           <Tag style={styles.tag} color="#2E94F9">
-            <Link to={`/category/${post.category}`}>{post.category}</Link>
+            <Link to={`/${post.category}`}>{post.category}</Link>
           </Tag>
         }
       >
@@ -177,10 +178,11 @@ styles.commentIcon = {
   color: '#2E94F9',
 };
 
-export default withRouter(
+export default compose(
+  withRouter,
   connect(null, {
     deletePost,
     editPost,
     votePost,
-  })(PostCard)
-);
+  })
+)(PostCard);

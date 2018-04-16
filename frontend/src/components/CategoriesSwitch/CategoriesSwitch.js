@@ -19,7 +19,7 @@ const CategoriesSwitch = ({ categories }) => {
               <Link
                 key={category.path}
                 to={{
-                  pathname: `/category/${category.path}`,
+                  pathname: `/${category.path}`,
                   state: { category: category.name },
                 }}
               >

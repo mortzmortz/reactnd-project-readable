@@ -13,12 +13,12 @@ const Routes = (
         <main>
           <Switch>
             <Route exact path="/" component={Views.AllPostsView} />
-            <Route path="/post/new" component={Views.CreateNewPostView} />
-            <Route path="/post/:post_id" component={Views.SinglePostView} />
+            <Route path="/new" component={Views.CreateNewPostView} />
             <Route
-              path="/category/:category_name"
-              component={Views.CategoryView}
+              path="/:category/:post_id"
+              component={Views.SinglePostView}
             />
+            <Route path="/:category" component={Views.CategoryView} />
             <Route
               render={() => <p className="route-error">Page not found</p>}
             />
