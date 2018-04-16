@@ -52,7 +52,7 @@ class Comment extends React.Component {
   reset = () => {
     this.setState({
       isEditing: false,
-      editBody: '',
+      editBody: this.props.comment.body,
     });
   };
 
