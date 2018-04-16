@@ -3,9 +3,7 @@ import axios from 'axios';
 const port = 3001;
 const baseURL = `http://localhost:${port}`;
 const headers = {
-  Authorization: Math.random()
-    .toString(36)
-    .substr(-8),
+  Authorization: 'bearer-token',
 };
 
 export const getData = (endpoint = '/') =>
