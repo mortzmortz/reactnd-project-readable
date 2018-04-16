@@ -5,14 +5,10 @@ import { Link } from 'react-router-dom';
 
 import { Menu } from 'antd';
 
-import { LoadingIndicator } from 'components/';
-
 const CategoriesSwitch = ({ categories }) => {
   return (
     <div className="categories-switch">
-      {categories.isFetching ? (
-        <LoadingIndicator />
-      ) : (
+      {Object.keys(categories.byName).length ? (
         <Menu mode="horizontal" selectedKeys={[categories.active]}>
           {Object.values(categories.byName).map(category => (
             <Menu.Item key={category.name} style={styles.menuItem}>
@@ -28,7 +24,7 @@ const CategoriesSwitch = ({ categories }) => {
             </Menu.Item>
           ))}
         </Menu>
-      )}
+      ) : null}
     </div>
   );
 };
